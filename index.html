@@ -1,66 +1,217 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#14532d">
-<meta name="description" content="DukaanGanit - छोटे दुकानदारों के लिए बिक्री, खर्च, उधार, स्टॉक और मुनाफे का आसान हिसाब।">
-<title>DukaanGanit | दुकानदारों का स्मार्ट हिसाब</title>
-<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DukaanGanit - Smart Business Hisab Kit</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#0f172a" />
 </head>
 <body>
-<header class="top"><div class="brand"><span class="logo">₹</span><div><b>DukaanGanit</b><small>दुकानदारों का स्मार्ट हिसाब</small></div></div><span class="tag">मुफ्त बिजनेस टूल</span></header>
-<main>
-<section class="hero"><p class="eyebrow">आपकी दुकान, आपका हिसाब</p><h1>दुकान का हिसाब अब आसान</h1><p>बिक्री, खर्च, उधार और मुनाफे की तुरंत गणना करें।</p></section>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">🧮</span>
+      <div>
+        <h1 id="appTitle">DukaanGanit</h1>
+        <p id="appSubtitle">स्मार्ट दुकान हिसाब व बिलिंग</p>
+      </div>
+    </div>
+    <button id="langBtn" class="lang-btn" onclick="toggleLanguage()">English</button>
+  </header>
 
-<section class="tabs" aria-label="कैलकुलेटर">
-<button class="tab active" data-tab="khata">ग्राहक खाता (उधार)</button>
-<button class="tab" data-tab="profit">मुनाफा</button>
-<button class="tab" data-tab="margin">मार्जिन</button>
-<button class="tab" data-tab="discount">छूट</button>
-<button class="tab" data-tab="udhaar">उधार बाकी</button>
-</section>
+  <!-- AdSense Top Banner Slot (Monetization Ready) -->
+  <div class="ad-slot" id="ad-top">
+    <span class="ad-label">Advertisement</span>
+    <div class="ad-box">Google AdSense Space (728x90 / Responsive)</div>
+  </div>
 
-<!-- ग्राहक खाता और WhatsApp पर्ची शेयरिंग फीचर (Primary Traffic Feature) -->
-<section class="panel" id="khata">
-<h2>ग्राहक उधार बही & WhatsApp पर्ची</h2>
-<div class="fields">
-<label>ग्राहक का नाम<input id="custName" type="text" placeholder="जैसे: रमेश कुमार"></label>
-<label>मोबाइल नंबर (WhatsApp)<input id="custPhone" type="tel" placeholder="10 अंक का नंबर"></label>
-<label>उधार राशि (₹)<input id="custAmount" type="number" min="0" placeholder="राशि लिखें"></label>
-<label>विवरण / सामान<input id="custDesc" type="text" placeholder="जैसे: चीनी, तेल"></label>
-</div>
-<button id="saveKhataBtn" class="btn-primary">उधार सेव करें</button>
-<div class="khata-summary">
-<span>कुल बाकी उधार:</span>
-<strong id="totalKhataOut">₹0</strong>
-</div>
-<div style="margin-top:20px;">
-<h3>सेव किए गए ग्राहक</h3>
-<div id="khataList" class="khata-list">अभी कोई एंट्री नहीं है।</div>
-</div>
-</section>
+  <nav class="tabs">
+    <button class="tab active" onclick="switchTab('khata', this)" data-i18n="tab_khata">📒 उधार खाता</button>
+    <button class="tab" onclick="switchTab('daily', this)" data-i18n="tab_daily">📊 बिक्री-खर्च</button>
+    <button class="tab" onclick="switchTab('bill', this)" data-i18n="tab_bill">🧾 पक्का बिल</button>
+    <button class="tab" onclick="switchTab('calc', this)" data-i18n="tab_calc">🔢 कैलकुलेटर</button>
+    <button class="tab" onclick="switchTab('backup', this)" data-i18n="tab_backup">☁️ बैकअप</button>
+  </nav>
 
-<section class="panel hidden" id="profit">
-<h2>मुनाफा कैलकुलेटर</h2><div class="fields"><label>खरीद कीमत (₹)<input id="buy" type="number" min="0" value="100"></label><label>बिक्री कीमत (₹)<input id="sell" type="number" min="0" value="150"></label><label>मात्रा<input id="qty" type="number" min="0" value="10"></label></div>
-<div class="result"><span>कुल अनुमानित मुनाफा</span><strong id="profitOut">₹500</strong></div><p class="hint">यह सकल मुनाफा है; अन्य खर्च इसमें शामिल नहीं हैं।</p>
-</section>
+  <main class="container">
+    <!-- 1. UDHAR KHATA TAB -->
+    <section id="tab-khata" class="panel active">
+      <div class="summary-grid">
+        <div class="stat-card green">
+          <small data-i18n="total_jama">कुल जमा (आया)</small>
+          <h3 id="khataTotalJama">₹0</h3>
+        </div>
+        <div class="stat-card red">
+          <small data-i18n="total_udhar">कुल उधार (बाकी)</small>
+          <h3 id="khataTotalUdhar">₹0</h3>
+        </div>
+      </div>
 
-<section class="panel hidden" id="margin">
-<h2>मुनाफा प्रतिशत</h2><div class="fields"><label>खरीद कीमत (₹)<input id="mBuy" type="number" min="0" value="100"></label><label>बिक्री कीमत (₹)<input id="mSell" type="number" min="0" value="150"></label></div><div class="result"><span>खरीद लागत पर मुनाफा</span><strong id="marginOut">50%</strong></div>
-</section>
+      <div class="card">
+        <h2 data-i18n="add_khata_entry">ग्राहक का हिसाब जोड़ें</h2>
+        <div class="form-group">
+          <input type="text" id="custName" placeholder="ग्राहक का नाम (जैसे: रमेश कुमार)" />
+        </div>
+        <div class="form-row">
+          <input type="tel" id="custPhone" placeholder="मोबाइल नंबर (WhatsApp)" />
+          <input type="number" id="custAmount" placeholder="राशि (₹)" />
+        </div>
+        <div class="form-group">
+          <input type="text" id="custNote" placeholder="विवरण (जैसे: 5 किलो आटा, चीनी)" />
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-red" onclick="addKhataEntry('udhar')" data-i18n="btn_udhar">+ उधार दिया (बाकी)</button>
+          <button class="btn btn-green" onclick="addKhataEntry('jama')" data-i18n="btn_jama">+ जमा मिला (नकद)</button>
+        </div>
+      </div>
 
-<section class="panel hidden" id="discount">
-<h2>छूट कैलकुलेटर</h2><div class="fields"><label>मूल कीमत (₹)<input id="price" type="number" min="0" value="1000"></label><label>छूट (%)<input id="discountRate" type="number" min="0" max="100" value="10"></label></div><div class="result"><span>छूट के बाद कीमत</span><strong id="discountOut">₹900</strong></div>
-</section>
+      <div class="card">
+        <div class="card-header">
+          <h2 data-i18n="khata_list">ग्राहक सूची</h2>
+          <input type="text" id="searchKhata" class="search-input" onkeyup="renderKhata()" placeholder="नाम खोजें..." />
+        </div>
+        <div id="khataList" class="list-container"></div>
+      </div>
+    </section>
 
-<section class="panel hidden" id="udhaar">
-<h2>उधार बाकी कैलकुलेटर</h2><div class="fields"><label>कुल उधार (₹)<input id="credit" type="number" min="0" value="2000"></label><label>जमा भुगतान (₹)<input id="paid" type="number" min="0" value="500"></label></div><div class="result"><span>बाकी उधार</span><strong id="udhaarOut">₹1,500</strong></div>
-</section>
+    <!-- 2. DAILY SALES & EXPENSE REGISTER -->
+    <section id="tab-daily" class="panel">
+      <div class="summary-grid three">
+        <div class="stat-card green">
+          <small data-i18n="today_sales">कुल बिक्री</small>
+          <h3 id="dailyTotalSales">₹0</h3>
+        </div>
+        <div class="stat-card red">
+          <small data-i18n="today_expense">कुल खर्च</small>
+          <h3 id="dailyTotalExp">₹0</h3>
+        </div>
+        <div class="stat-card blue">
+          <small data-i18n="net_profit">शुद्ध मुनाफा</small>
+          <h3 id="dailyNetProfit">₹0</h3>
+        </div>
+      </div>
 
-<section class="note"><h2>जल्द आ रहे हैं</h2><p>दैनिक बिक्री रजिस्टर · खर्च रजिस्टर · स्टॉक मैनेजर</p></section>
-</main>
-<footer><p>© <span id="year"></span> DukaanGanit</p><nav><a href="about.html">हमारे बारे में</a><a href="privacy.html">गोपनीयता नीति</a><a href="contact.html">संपर्क</a></nav><small>यह शुरुआती गणना टूल है, टैक्स या वैधानिक लेखांकन सॉफ्टवेयर नहीं।</small></footer>
-<script src="app.js"></script>
+      <div class="card">
+        <h2 data-i18n="add_daily_entry">दैनिक बिक्री या खर्च लिखें</h2>
+        <div class="form-row">
+          <select id="dailyType">
+            <option value="sale" data-i18n="opt_sale">बिक्री (Sale +)</option>
+            <option value="expense" data-i18n="opt_expense">दुकान खर्च (Expense -)</option>
+          </select>
+          <input type="number" id="dailyAmount" placeholder="राशि (₹)" />
+        </div>
+        <div class="form-group">
+          <input type="text" id="dailyDesc" placeholder="विवरण (जैसे: गल्ला बिक्री / चाय-बिजली)" />
+        </div>
+        <button class="btn btn-primary full" onclick="addDailyEntry()" data-i18n="btn_save_entry">रजिस्टर में सेव करें</button>
+      </div>
+
+      <div class="card">
+        <h2 data-i18n="daily_history">आज का विवरण</h2>
+        <div id="dailyList" class="list-container"></div>
+      </div>
+    </section>
+
+    <!-- 3. PROFESSIONAL BILL / INVOICE GENERATOR -->
+    <section id="tab-bill" class="panel">
+      <div class="card">
+        <h2 data-i18n="create_bill">डिजिटल बिल / पर्ची बनाएं</h2>
+        <div class="form-row">
+          <input type="text" id="shopName" placeholder="आपकी दुकान का नाम" />
+          <input type="text" id="billCustName" placeholder="ग्राहक का नाम" />
+        </div>
+        <div class="form-group">
+          <input type="tel" id="billCustPhone" placeholder="ग्राहक का WhatsApp नंबर" />
+        </div>
+
+        <div class="item-adder">
+          <input type="text" id="itemName" placeholder="सामान का नाम" />
+          <input type="number" id="itemQty" placeholder="मात्रा" value="1" min="1" />
+          <input type="number" id="itemPrice" placeholder="रेट (₹)" />
+          <button class="btn btn-primary" onclick="addBillItem()">+</button>
+        </div>
+
+        <div id="billItemsList" class="bill-items"></div>
+
+        <div class="bill-total-bar">
+          <span data-i18n="grand_total">कुल योग:</span>
+          <strong id="billGrandTotal">₹0</strong>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="shareBillWhatsApp()" data-i18n="btn_wa_bill">📲 WhatsApp पर भेजें</button>
+          <button class="btn btn-outline" onclick="printBill()" data-i18n="btn_print_bill">🖨️ प्रिंट / PDF सेव करें</button>
+          <button class="btn btn-red-outline" onclick="clearBill()" data-i18n="btn_clear">साफ़ करें</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SMART CALCULATOR -->
+    <section id="tab-calc" class="panel">
+      <div class="card">
+        <h2 data-i18n="calc_title">दुकान कैलकुलेटर व मार्जिन</h2>
+        <div class="calc-display" id="calcDisplay">0</div>
+        <div class="calc-grid">
+          <button onclick="calcClear()" class="c-op">C</button>
+          <button onclick="calcInput('/')" class="c-op">÷</button>
+          <button onclick="calcInput('*')" class="c-op">×</button>
+          <button onclick="calcBack()" class="c-op">⌫</button>
+
+          <button onclick="calcInput('7')">7</button>
+          <button onclick="calcInput('8')">8</button>
+          <button onclick="calcInput('9')">9</button>
+          <button onclick="calcInput('-')" class="c-op">−</button>
+
+          <button onclick="calcInput('4')">4</button>
+          <button onclick="calcInput('5')">5</button>
+          <button onclick="calcInput('6')">6</button>
+          <button onclick="calcInput('+')" class="c-op">+</button>
+
+          <button onclick="calcInput('1')">1</button>
+          <button onclick="calcInput('2')">2</button>
+          <button onclick="calcInput('3')">3</button>
+          <button onclick="calcEqual()" class="c-eq">=</button>
+
+          <button onclick="calcInput('0')" class="span-2">0</button>
+          <button onclick="calcInput('.')">.</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. CLOUD DATA BACKUP & RESTORE -->
+    <section id="tab-backup" class="panel">
+      <div class="card">
+        <h2 data-i18n="backup_title">डेटा बैकअप और सुरक्षा (Cloud Safety)</h2>
+        <p class="muted" data-i18n="backup_desc">आपका सारा हिसाब आपके फोन में सुरक्षित रहता है। नया फोन लेने पर या सुरक्षा के लिए नीचे दिए बटन से बैकअप फाइल डाउनलोड करके Google Drive या WhatsApp पर सेव रख सकते हैं।</p>
+        
+        <div class="backup-box">
+          <button class="btn btn-primary full" onclick="exportBackup()" data-i18n="btn_export">⬇️ पूरा डेटा बैकअप डाउनलोड करें (.json)</button>
+        </div>
+
+        <div class="backup-box">
+          <label class="file-upload-label" data-i18n="lbl_import">पुरानी बैकअप फाइल से डेटा वापस लाएं (Restore):</label>
+          <input type="file" id="restoreFile" accept=".json" onchange="importBackup(event)" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- AdSense Bottom Banner Slot (Monetization Ready) -->
+  <div class="ad-slot" id="ad-bottom">
+    <span class="ad-label">Sponsored / Ad</span>
+    <div class="ad-box">Google AdSense Responsive Unit</div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2026 DukaanGanit • Smart Business Hisab</p>
+    <div class="footer-links">
+      <a href="about.html" data-i18n="link_about">हमारे बारे में</a> •
+      <a href="privacy.html" data-i18n="link_privacy">गोपनीयता नीति</a> •
+      <a href="contact.html" data-i18n="link_contact">संपर्क करें</a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
