@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#14532d">
+<meta name="description" content="DukaanGanit - छोटे दुकानदारों के लिए बिक्री, खर्च, उधार, स्टॉक और मुनाफे का आसान हिसाब।">
+<title>DukaanGanit | दुकानदारों का स्मार्ट हिसाब</title>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><div class="brand"><span class="logo">₹</span><div><b>DukaanGanit</b><small>दुकानदारों का स्मार्ट हिसाब</small></div></div><span class="tag">मुफ्त बिजनेस टूल</span></header>
+<main>
+<section class="hero"><p class="eyebrow">आपकी दुकान, आपका हिसाब</p><h1>दुकान का हिसाब अब आसान</h1><p>बिक्री, खर्च, उधार और मुनाफे की तुरंत गणना करें।</p></section>
+<section class="tabs" aria-label="कैलकुलेटर">
+<button class="tab active" data-tab="profit">मुनाफा</button><button class="tab" data-tab="margin">मार्जिन</button><button class="tab" data-tab="discount">छूट</button><button class="tab" data-tab="udhaar">उधार बाकी</button>
+</section>
+<section class="panel" id="profit">
+<h2>मुनाफा कैलकुलेटर</h2><div class="fields"><label>खरीद कीमत (₹)<input id="buy" type="number" min="0" value="100"></label><label>बिक्री कीमत (₹)<input id="sell" type="number" min="0" value="150"></label><label>मात्रा<input id="qty" type="number" min="0" value="10"></label></div>
+<div class="result"><span>कुल अनुमानित मुनाफा</span><strong id="profitOut">₹500</strong></div><p class="hint">यह सकल मुनाफा है; अन्य खर्च इसमें शामिल नहीं हैं।</p>
+</section>
+<section class="panel hidden" id="margin">
+<h2>मुनाफा प्रतिशत</h2><div class="fields"><label>खरीद कीमत (₹)<input id="mBuy" type="number" min="0" value="100"></label><label>बिक्री कीमत (₹)<input id="mSell" type="number" min="0" value="150"></label></div><div class="result"><span>खरीद लागत पर मुनाफा</span><strong id="marginOut">50%</strong></div>
+</section>
+<section class="panel hidden" id="discount">
+<h2>छूट कैलकुलेटर</h2><div class="fields"><label>मूल कीमत (₹)<input id="price" type="number" min="0" value="1000"></label><label>छूट (%)<input id="discountRate" type="number" min="0" max="100" value="10"></label></div><div class="result"><span>छूट के बाद कीमत</span><strong id="discountOut">₹900</strong></div>
+</section>
+<section class="panel hidden" id="udhaar">
+<h2>उधार बाकी कैलकुलेटर</h2><div class="fields"><label>कुल उधार (₹)<input id="credit" type="number" min="0" value="2000"></label><label>जमा भुगतान (₹)<input id="paid" type="number" min="0" value="500"></label></div><div class="result"><span>बाकी उधार</span><strong id="udhaarOut">₹1,500</strong></div>
+</section>
+<section class="note"><h2>जल्द आ रहे हैं</h2><p>दैनिक बिक्री रजिस्टर · खर्च रजिस्टर · ग्राहक उधार बही · स्टॉक मैनेजर</p></section>
+</main>
+<footer><p>© <span id="year"></span> DukaanGanit</p><nav><a href="about.html">हमारे बारे में</a><a href="privacy.html">गोपनीयता नीति</a><a href="contact.html">संपर्क</a></nav><small>यह शुरुआती गणना टूल है, टैक्स या वैधानिक लेखांकन सॉफ्टवेयर नहीं।</small></footer>
+<script src="app.js"></script>
+</body></html>

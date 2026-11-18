@@ -1,0 +1,6 @@
+const $=id=>document.getElementById(id);const num=id=>Math.max(0,Number($(id).value)||0);const money=n=>"₹"+n.toLocaleString("en-IN",{maximumFractionDigits:2});
+function calc(){ $("profitOut").textContent=money((num("sell")-num("buy"))*num("qty"));let b=num("mBuy"),s=num("mSell");$("marginOut").textContent=b?(((s-b)/b)*100).toFixed(2)+"%":"—";$("discountOut").textContent=money(num("price")*(1-num("discountRate")/100));$("udhaarOut").textContent=money(Math.max(0,num("credit")-num("paid"))); }
+document.querySelectorAll("input").forEach(x=>x.addEventListener("input",calc));
+document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));btn.classList.add("active");document.querySelectorAll(".panel").forEach(p=>p.classList.add("hidden"));$(btn.dataset.tab).classList.remove("hidden")}));
+$("year").textContent=new Date().getFullYear();calc();
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}
