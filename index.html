@@ -12,24 +12,55 @@
 <header class="top"><div class="brand"><span class="logo">₹</span><div><b>DukaanGanit</b><small>दुकानदारों का स्मार्ट हिसाब</small></div></div><span class="tag">मुफ्त बिजनेस टूल</span></header>
 <main>
 <section class="hero"><p class="eyebrow">आपकी दुकान, आपका हिसाब</p><h1>दुकान का हिसाब अब आसान</h1><p>बिक्री, खर्च, उधार और मुनाफे की तुरंत गणना करें।</p></section>
+
 <section class="tabs" aria-label="कैलकुलेटर">
-<button class="tab active" data-tab="profit">मुनाफा</button><button class="tab" data-tab="margin">मार्जिन</button><button class="tab" data-tab="discount">छूट</button><button class="tab" data-tab="udhaar">उधार बाकी</button>
+<button class="tab active" data-tab="khata">ग्राहक खाता (उधार)</button>
+<button class="tab" data-tab="profit">मुनाफा</button>
+<button class="tab" data-tab="margin">मार्जिन</button>
+<button class="tab" data-tab="discount">छूट</button>
+<button class="tab" data-tab="udhaar">उधार बाकी</button>
 </section>
-<section class="panel" id="profit">
+
+<!-- ग्राहक खाता और WhatsApp पर्ची शेयरिंग फीचर (Primary Traffic Feature) -->
+<section class="panel" id="khata">
+<h2>ग्राहक उधार बही & WhatsApp पर्ची</h2>
+<div class="fields">
+<label>ग्राहक का नाम<input id="custName" type="text" placeholder="जैसे: रमेश कुमार"></label>
+<label>मोबाइल नंबर (WhatsApp)<input id="custPhone" type="tel" placeholder="10 अंक का नंबर"></label>
+<label>उधार राशि (₹)<input id="custAmount" type="number" min="0" placeholder="राशि लिखें"></label>
+<label>विवरण / सामान<input id="custDesc" type="text" placeholder="जैसे: चीनी, तेल"></label>
+</div>
+<button id="saveKhataBtn" class="btn-primary">उधार सेव करें</button>
+<div class="khata-summary">
+<span>कुल बाकी उधार:</span>
+<strong id="totalKhataOut">₹0</strong>
+</div>
+<div style="margin-top:20px;">
+<h3>सेव किए गए ग्राहक</h3>
+<div id="khataList" class="khata-list">अभी कोई एंट्री नहीं है।</div>
+</div>
+</section>
+
+<section class="panel hidden" id="profit">
 <h2>मुनाफा कैलकुलेटर</h2><div class="fields"><label>खरीद कीमत (₹)<input id="buy" type="number" min="0" value="100"></label><label>बिक्री कीमत (₹)<input id="sell" type="number" min="0" value="150"></label><label>मात्रा<input id="qty" type="number" min="0" value="10"></label></div>
 <div class="result"><span>कुल अनुमानित मुनाफा</span><strong id="profitOut">₹500</strong></div><p class="hint">यह सकल मुनाफा है; अन्य खर्च इसमें शामिल नहीं हैं।</p>
 </section>
+
 <section class="panel hidden" id="margin">
 <h2>मुनाफा प्रतिशत</h2><div class="fields"><label>खरीद कीमत (₹)<input id="mBuy" type="number" min="0" value="100"></label><label>बिक्री कीमत (₹)<input id="mSell" type="number" min="0" value="150"></label></div><div class="result"><span>खरीद लागत पर मुनाफा</span><strong id="marginOut">50%</strong></div>
 </section>
+
 <section class="panel hidden" id="discount">
 <h2>छूट कैलकुलेटर</h2><div class="fields"><label>मूल कीमत (₹)<input id="price" type="number" min="0" value="1000"></label><label>छूट (%)<input id="discountRate" type="number" min="0" max="100" value="10"></label></div><div class="result"><span>छूट के बाद कीमत</span><strong id="discountOut">₹900</strong></div>
 </section>
+
 <section class="panel hidden" id="udhaar">
 <h2>उधार बाकी कैलकुलेटर</h2><div class="fields"><label>कुल उधार (₹)<input id="credit" type="number" min="0" value="2000"></label><label>जमा भुगतान (₹)<input id="paid" type="number" min="0" value="500"></label></div><div class="result"><span>बाकी उधार</span><strong id="udhaarOut">₹1,500</strong></div>
 </section>
-<section class="note"><h2>जल्द आ रहे हैं</h2><p>दैनिक बिक्री रजिस्टर · खर्च रजिस्टर · ग्राहक उधार बही · स्टॉक मैनेजर</p></section>
+
+<section class="note"><h2>जल्द आ रहे हैं</h2><p>दैनिक बिक्री रजिस्टर · खर्च रजिस्टर · स्टॉक मैनेजर</p></section>
 </main>
 <footer><p>© <span id="year"></span> DukaanGanit</p><nav><a href="about.html">हमारे बारे में</a><a href="privacy.html">गोपनीयता नीति</a><a href="contact.html">संपर्क</a></nav><small>यह शुरुआती गणना टूल है, टैक्स या वैधानिक लेखांकन सॉफ्टवेयर नहीं।</small></footer>
 <script src="app.js"></script>
-</body></html>
+</body>
+</html>
